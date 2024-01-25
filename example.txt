@@ -1,0 +1,4 @@
+com.nspk.mir-loyalty Привет МИР
+ru.doublegis.grymmobile 2ГИС
+ru.rutube.main RuTube
+ru.yandex.mobile Яндекс с Алисой
