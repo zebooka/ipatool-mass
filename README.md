@@ -17,6 +17,9 @@ To mass download apps using list of apps do this:
 
 Of course, you need to place `ipatool-mass.sh` to one of your `$PATH` directories.
 
+After processing list of bundles, script searches for multiple versions available for applications and automatically removes
+old ones. Set protection to old versions you want to keep (using `uchg` flag, see `man chflags`).
+
 
 ## Notice about downloaded IPA files
 
