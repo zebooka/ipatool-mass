@@ -17,11 +17,11 @@ while read L; do
     mkdir -p "${S}" && test -f ${B}_*.ipa && mv -v ${B}_*.ipa "${S}/"
 done < "${1:-/dev/stdin}"
 
-echo -e "\033[31m"
+echo -en "\033[35m"
 find . -type d -maxdepth 1 -mindepth 1 | while read D; do
     find "$D" -type f -iname '*.ipa' -flags nouchg | \
     sort --version-sort -r | \
     tail -n+2 | \
     while read O; do rm -v "$O"; done
 done
-echo -e "\033[0m"
+echo -en "\033[0m"
