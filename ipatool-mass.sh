@@ -9,12 +9,14 @@ while read L; do
     fi
     V=$(ipatool search --format json "$S" | jq ".apps[] | select(.bundleID==\"$B\") | .version" -r)
     if find . -type f -iname "${B}_*_${V}.ipa" | grep -qz . ; then
-        echo -e "\033[2;37m$(find . -type f -iname "${B}_*.ipa" | sort --version-sort -r | head -n1 | sed -E 's#^\./##') \033[0;37m$S\033[0m"
+        # echo -e "\033[2;37m$(find . -type f -iname "${B}_*.ipa" | sort --version-sort -r | head -n1 | sed -E 's#^\./##') \033[0;37m$S\033[0m"
+        echo -e "\033[2;37m$B \033[0;37m$S \033[2;37m$V\033[0m"
     else
         echo -e "\033[2;37m$B \033[0;37m$S \033[1;32m$V\033[0m"
         ipatool download -b "$B" --purchase
+        test -n "$V" && echo -en "\r\033[A\033[K"
     fi
-    mkdir -p "${S}" && test -f ${B}_*.ipa && mv -v ${B}_*.ipa "${S}/"
+    mkdir -p "${S}" && test -f ${B}_*.ipa && mv ${B}_*.ipa "${S}/"
 done < "${1:-/dev/stdin}"
 
 echo -en "\033[35m"
