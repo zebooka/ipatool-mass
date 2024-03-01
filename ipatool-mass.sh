@@ -16,7 +16,7 @@ while read L; do
         ipatool download -b "$B" --purchase
         test -n "$V" && echo -en "\r\033[A\033[K"
     fi
-    mkdir -p "${S}" && mv ${B}_*.ipa "${S}/"
+    mkdir -p "${S}" && compgen -G ${B}_*.ipa >/dev/null && mv ${B}_*.ipa "${S}/"
 done < "${1:-/dev/stdin}"
 
 echo -en "\033[35m"

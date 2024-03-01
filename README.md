@@ -10,12 +10,11 @@ Mass downloading IPA files from App Store using [ipatool](https://github.com/maj
 Use command `ipatool search "QUERY" --format json | jq` for searching required application by QUERY keywords. 
 `jq` application is used here only for formatting purpose. Now, when you known app's bundle ID you can add it to a text file.
 
-###
+### Mass downloading
 
 Form a files with list of bundles you want to download. See `example.txt`. Each line consists of bundle id and search term.
-A bundle id is a sort of namespace of an app. To search for it, you can use `ipatool search`. As current version (`2.1.*`) of 
-`ipatool` does not allow reading information about app by bundle, we need to use search term for finding recent 
-app version for detecting if we need to download an update of an app.
+A bundle id is a sort of namespace of an app. As current version (`2.1.*`) of `ipatool` does not allow reading information 
+about app by bundle, we need to use search term for finding recent app version for detecting if we need to download an update of an app.
 
 Applications are downloaded to the current directory and then moved to subdirectories with names made of search terms. 
 To mass download apps using list of apps do this:
