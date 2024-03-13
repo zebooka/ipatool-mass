@@ -21,7 +21,7 @@ done < "${1:-/dev/stdin}"
 
 echo -en "\033[35m"
 find . -type d -maxdepth 1 -mindepth 1 | while read D; do
-    find "$D" -type f -iname '*.ipa' -flags nouchg | \
+    find "$D" -maxdepth 1 -type f -iname '*.ipa' -flags nouchg | \
     sort --version-sort -r | \
     tail -n+2 | \
     while read O; do rm -v "$O"; done
