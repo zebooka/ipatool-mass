@@ -8,14 +8,15 @@ while read L; do
         continue
     fi
     V=$(ipatool search --format json "$S" | jq ".apps[] | select(.bundleID==\"$B\") | .version" -r)
-    if find . -type f -iname "${B}_*_${V}.ipa" | grep -qz . ; then
-        echo -e "\033[2;37m$B \033[0;37m$S \033[2;37m$V\033[0m"
+    D=$(dirname "$(find . -mindepth 1 -type f -iname "${B}_*.ipa" | head -n1 | grep . || echo "./${S}/.")")
+    if find . -type f -iname "${B}_*_${V}.ipa" | grep -q . ; then
+        echo -e "\033[2;37m$B \033[0;37m$D \033[2;37m$V\033[0m"
     else
         W=`find . -type f -iname "${B}_*.ipa" | sort --version-sort -r | head -n1 | xargs -I {} basename -s .ipa "{}" | tr _ ' ' | awk '{ print \$3 }'`
-        echo -e "\033[2;37m$B \033[0;37m$S \033[2;37m$W » \033[0;1;32m$V\033[0m"
+        echo -e "\033[2;37m$B \033[0;37m$D \033[2;37m$W » \033[0;1;32m$V\033[0m"
         ipatool download -b "$B" --purchase && echo -en "\r\033[A\033[K"
     fi
-    mkdir -p "${S}" && compgen -G ${B}_*.ipa >/dev/null && mv ${B}_*.ipa "${S}/"
+    mkdir -p "$D" && compgen -G ${B}_*.ipa >/dev/null && mv ${B}_*.ipa "${D}/"
 done < "${1:-/dev/stdin}"
 
 echo -en "\033[35m"
@@ -25,4 +26,5 @@ find . -type d -maxdepth 1 -mindepth 1 | while read D; do
     tail -n+2 | \
     while read O; do rm -v "$O"; done
 done
+find . -maxdepth 0 -type f -iname '*.ipa.tmp' -flags nouchg | while read F; do rm -v "$F"; done
 echo -en "\033[0m"
