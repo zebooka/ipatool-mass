@@ -26,5 +26,5 @@ find . -type d | while read D; do
     tail -n+2 | \
     while read O; do rm -v "$O"; done
 done
-find . -maxdepth 1 -type f -iname '*.ipa.tmp' -flags nouchg | while read F; do rm -v "$F"; done
+find . -maxdepth 1 -type f -iname '*.ipa.tmp' -mtime +30 -flags nouchg | while read F; do rm -v "$F"; done
 echo -en "\033[0m"
